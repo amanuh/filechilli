@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>FileChilli — Free File Tools</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f6f7f9;--card:#fff;--tx:#14181f;--mut:#667085;--bd:#e3e6ec;--ac:#ff6a1a;--ac2:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1116;--card:#171b23;--tx:#eef1f6;--mut:#9aa4b5;--bd:#272d38;--ac:#ff7a33;--ac2:#14181f}}
+:root[data-theme="dark"]{--bg:#0e1116;--card:#171b23;--tx:#eef1f6;--mut:#9aa4b5;--bd:#272d38;--ac:#ff7a33;--ac2:#14181f}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.w{max-width:960px;margin:0 auto;padding:16px}
+header{text-align:center;padding:28px 0 12px}
+.logo{font-size:34px;font-weight:800;letter-spacing:-1px}.logo b{color:var(--ac)}
+header p{color:var(--mut);margin:6px 0 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin:18px 0}
+.t{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;cursor:pointer;text-align:left;color:var(--tx);font:inherit}
+.t:hover,.t.on{border-color:var(--ac)}
+.t i{font-style:normal;font-size:24px;display:block}.t strong{display:block;margin-top:4px}.t span{color:var(--mut);font-size:12.5px}
+.panel{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:18px;margin-bottom:24px}
+.panel h2{margin:0 0 4px}.panel p.d{color:var(--mut);margin:0 0 14px}
+.drop{border:2px dashed var(--bd);border-radius:12px;padding:22px;text-align:center;color:var(--mut);cursor:pointer}
+.drop:hover{border-color:var(--ac)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:12px 0}
+label{font-size:13px;color:var(--mut);display:flex;flex-direction:column;gap:3px}
+select,input[type=number],input[type=text],textarea{background:var(--bg);color:var(--tx);border:1px solid var(--bd);border-radius:8px;padding:8px;font:inherit}
+textarea{width:100%;min-height:240px;font:13px/1.45 ui-monospace,Menlo,Consolas,monospace}
+button.b{background:var(--ac);color:var(--ac2);border:0;border-radius:10px;padding:10px 16px;font:inherit;font-weight:600;cursor:pointer}
+button.g{background:var(--bg);color:var(--tx);border:1px solid var(--bd);border-radius:10px;padding:9px 13px;font:inherit;cursor:pointer}
+.list{margin:10px 0;display:flex;flex-direction:column;gap:6px}
+.item{display:flex;justify-content:space-between;gap:8px;align-items:center;background:var(--bg);border-radius:8px;padding:8px 10px;font-size:13.5px;word-break:break-all}
+.item small{color:var(--mut);white-space:nowrap}
+canvas{max-width:100%;height:auto;border-radius:8px;border:1px solid var(--bd);background:repeating-conic-gradient(#8883 0 25%,transparent 0 50%) 0 0/16px 16px}
+.msg{color:var(--mut);font-size:13px;margin-top:8px}
+footer{text-align:center;color:var(--mut);font-size:13px;padding:10px 0 30px}
+html:root:root{--bg:#000;--card:#0a0a0a;--tx:#fff;--mut:#8b928d;--bd:#232623;--ac:#22e06b;--ac2:#000;color-scheme:dark}
+body{background:#000}
+header{text-align:left;padding:30px 0 16px;border-bottom:1px solid var(--bd)}
+.logo{font-size:30px;letter-spacing:-.5px}
+.t,.panel,.drop,.item,select,input,textarea,button{border-radius:6px}
+.t{padding:14px;background:var(--card)}
+.t.on{background:#08140d}
+.t i{font:600 12px ui-monospace,Menlo,monospace;color:var(--ac);margin-bottom:22px}
+.drop{position:relative;padding:36px 16px;color:#fff;background:var(--bg)}
+.drop:hover{border-color:var(--ac);color:var(--ac)}
+.fi{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;font-size:0}
+button.b{background:var(--ac);color:#000}
+button.g{background:transparent;color:#fff}
+button.g:hover{border-color:var(--ac);color:var(--ac)}
+input[type=range]{accent-color:var(--ac)}
+select:focus,input:focus,textarea:focus{outline:2px solid #fff}
+html:root:root{--bd:#3a3a3a;--mut:#9a9a9a;--ac:#fff;--ac2:#000;--card:#000}
+*{border-radius:0!important}
+.logo{font-weight:800}.logo b{background:#fff;color:#000;padding:0 8px;margin-left:3px}
+.t,.panel,.drop,.item,select,input,textarea,button.g{border:1px solid var(--bd)}
+.panel{border:2px solid #fff}
+.t{color:#fff;transition:none}
+.t:hover,.t.on{background:#fff;color:#000;border-color:#fff}
+.t.on span,.t:hover span{color:#333}
+.ic{width:28px;height:28px;display:block;margin-bottom:24px}
+.item{background:#0d0d0d}
+.drop{border:2px dashed #fff;color:#fff}.drop:hover{background:#fff;color:#000}
+button.b{background:#fff;color:#000;border:1px solid #fff;font-weight:700}button.b:hover{background:#000;color:#fff}
+button.g{color:#fff}button.g:hover{background:#fff;color:#000;border-color:#fff}
+select,input[type=number],input[type=text],textarea{background:#000;color:#fff}
+input[type=range]{accent-color:#fff}
+canvas{border:1px solid #fff}
+footer{border-top:1px solid var(--bd);padding-top:16px}
+html:root:root{--bg:#000;--card:#0b0b0b;--tx:#fff;--mut:#8d8d8d;--bd:#262626;--ac:#e5251b;--ac2:#fff}
+*{border-radius:6px!important}
+[hidden]{display:none!important}
+.w{max-width:860px}
+header{padding:34px 0 20px;border:0}
+.logo{cursor:pointer}.logo b{background:none;color:var(--ac);padding:0;margin:0}
+.grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin:18px 0 30px}
+.t{padding:24px;border:1px solid var(--bd);background:var(--card);color:#fff}
+.t:hover,.t.on{background:var(--card);color:#fff;border-color:var(--ac)}
+.t span,.t:hover span{color:var(--mut)}
+.t .ic{color:var(--ac);width:28px;height:28px;margin-bottom:28px}
+.t strong{font-size:16px;margin:0 0 2px}
+.panel{border:1px solid var(--bd);padding:26px}
+.panel>.ic{color:var(--ac);width:30px;height:30px;margin-bottom:14px}
+.drop{border:1.5px dashed #444;color:#fff;padding:40px 16px}.drop:hover{background:transparent;border-color:var(--ac);color:var(--ac)}
+button.b{background:var(--ac);color:#fff;border-color:var(--ac)}button.b:hover{background:#fff;color:#000;border-color:#fff}
+button.g:hover{background:transparent;color:var(--ac);border-color:var(--ac)}
+input[type=range]{accent-color:var(--ac)}
+canvas{border-color:var(--bd)}
+select:focus,input:focus,textarea:focus{outline:1px solid var(--ac)}
+</style></head><body><div class="w">
+<header><div class="logo" id="lg">File<b>Chilli</b></div><p id="hero">Convert, compress &amp; edit files — right in your browser. Nothing is uploaded.</p></header>
+<div class="grid" id="grid"></div>
+<div id="bk" hidden style="margin:4px 0 14px"><button class="g" id="bkb">&larr; All tools</button></div>
+<div class="panel" id="panel" hidden></div>
+<footer>FileChilli · all processing happens on your device</footer></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script>
+const $=s=>document.querySelector(s),P=$('#panel');
+let dls=null;try{claude.use("downloads").then(d=>dls=d).catch(()=>{})}catch(e){}
+const kb=n=>n>1048576?(n/1048576).toFixed(2)+' MB':(n/1024).toFixed(1)+' KB';
+async function save(name,blob,msgEl){
+  const m=msgEl||$('#msg');
+  if(dls){try{await dls.save({filename:name,data:blob});m.textContent='Saved '+name+' ('+kb(blob.size)+')';return}catch(e){if(e&&e.code==='declined'){m.textContent='Save cancelled.';return}}}
+  const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.textContent='Download '+name+' ('+kb(blob.size)+')';a.style.cssText='color:var(--ac);font-weight:600';
+  m.textContent='';m.append(a);try{a.click()}catch(e){}
+}
+const base=n=>n.replace(/\.[^.]+$/,'');
+const head=(t,d)=>`<h2>${t}</h2><p class="d">${d}</p>`;
+function picker(accept,multi,cb,label){
+  const id='f'+Math.random().toString(36).slice(2);
+  return `<div class="drop">${label||'Tap to choose'+(multi?' files':' a file')+' or drop here'}<input id="${id}" class="fi" type="file" ${multi?'multiple':''} accept="${accept}"></div>`;
+}
+function bind(accept,multi,cb,label){
+  const w=document.createElement('div');w.innerHTML=picker(accept,multi,cb,label);
+  const inp=w.querySelector('input');inp.onchange=()=>{const a=[...inp.files];inp.value='';if(a.length)cb(a)};
+  const d=w.querySelector('.drop');
+  d.ondragover=e=>e.preventDefault();d.ondrop=e=>{e.preventDefault();cb([...e.dataTransfer.files])};
+  return d;
+}
+const loadImg=f=>new Promise((r,j)=>{const i=new Image();i.onload=()=>r(i);i.onerror=j;i.src=URL.createObjectURL(f)});
+const toBlob=(c,t,q)=>new Promise(r=>c.toBlob(r,t,q));
+function draw(img,w,h,type){const c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d');if(type==='image/jpeg'){x.fillStyle='#fff';x.fillRect(0,0,w,h)}x.drawImage(img,0,0,w,h);return c}
+const EXT={'image/jpeg':'jpg','image/png':'png','image/webp':'webp'};
+const html=(s)=>{P.innerHTML=s};
+const row=(...a)=>`<div class="row">${a.join('')}</div>`;
+const msg='<div class="msg" id="msg"></div>';
+
+const tools=[
+{id:'conv',i:'🔄',n:'Image Converter',s:'JPG · PNG · WebP',run(){
+  html(head('Image Converter','Convert images between JPG, PNG and WebP. Batch supported.')+'<div id="pk"></div>'+row(
+   '<label>Convert to<select id="fmt"><option value="image/jpeg">JPG</option><option value="image/png">PNG</option><option value="image/webp">WebP</option></select></label>',
+   '<label>Quality (JPG/WebP)<input id="q" type="number" min="1" max="100" value="90"></label>')+'<div class="list" id="out"></div>'+msg);
+  $('#pk').append(bind('image/*',true,async fs=>{$('#out').innerHTML='';
+   for(const f of fs){try{const im=await loadImg(f),t=$('#fmt').value,c=draw(im,im.naturalWidth,im.naturalHeight,t),b=await toBlob(c,t,$('#q').value/100),n=base(f.name)+'.'+EXT[t];
+    const it=document.createElement('div');it.className='item';it.innerHTML=`<span>${n}</span><small>${kb(f.size)} → ${kb(b.size)}</small>`;
+    const bt=document.createElement('button');bt.className='b';bt.textContent='Save';bt.onclick=()=>save(n,b);it.append(bt);$('#out').append(it)}catch(e){$('#msg').textContent='Could not read '+f.name}}}))}},
+
+{id:'comp',i:'📉',n:'Image Compressor',s:'Shrink file size',run(){
+  html(head('Image Compressor','Reduce image size with adjustable quality and optional resize.')+'<div id="pk"></div>'+row(
+   '<label>Quality %<input id="q" type="number" min="5" max="100" value="70"></label>',
+   '<label>Max width px (0 = keep)<input id="mw" type="number" min="0" value="0"></label>',
+   '<label>Output<select id="fmt"><option value="image/jpeg">JPG</option><option value="image/webp">WebP</option></select></label>')+'<div class="list" id="out"></div>'+msg);
+  $('#pk').append(bind('image/*',true,async fs=>{$('#out').innerHTML='';
+   for(const f of fs){try{const im=await loadImg(f),mw=+$('#mw').value;let w=im.naturalWidth,h=im.naturalHeight;if(mw&&w>mw){h=Math.round(h*mw/w);w=mw}
+    const t=$('#fmt').value,b=await toBlob(draw(im,w,h,t),t,$('#q').value/100),n=base(f.name)+'-small.'+EXT[t],p=Math.round(100-b.size/f.size*100);
+    const it=document.createElement('div');it.className='item';it.innerHTML=`<span>${n}</span><small>${kb(f.size)} → ${kb(b.size)} (${p>0?'-'+p+'%':'+'+(-p)+'%'})</small>`;
+    const bt=document.createElement('button');bt.className='b';bt.textContent='Save';bt.onclick=()=>save(n,b);it.append(bt);$('#out').append(it)}catch(e){$('#msg').textContent='Could not read '+f.name}}}))}},
+
+{id:'ied',i:'🎨',n:'Image Editor',s:'Rotate, filters, resize',run(){
+  html(head('Image Editor','Rotate, flip, resize and apply filters, then export.')+'<div id="pk"></div><div id="ed" hidden>'+row(
+   '<button class="g" data-a="rot">Rotate</button>','<button class="g" data-a="fx">Flip H</button>','<button class="g" data-a="fy">Flip V</button>','<button class="g" data-a="reset">Reset</button>')+row(
+   '<label>Brightness<input id="br" type="range" min="0" max="200" value="100"></label>','<label>Contrast<input id="ct" type="range" min="0" max="200" value="100"></label>',
+   '<label>Saturation<input id="sa" type="range" min="0" max="200" value="100"></label>','<label>Blur<input id="bl" type="range" min="0" max="10" value="0"></label>',
+   '<label>Grayscale<input id="gs" type="range" min="0" max="100" value="0"></label>')+row(
+   '<label>Width px<input id="rw" type="number" min="1"></label>','<label>Export<select id="fmt"><option value="image/png">PNG</option><option value="image/jpeg">JPG</option><option value="image/webp">WebP</option></select></label>','<button class="b" id="sv">Save image</button>')+'<canvas id="cv"></canvas></div>'+msg);
+  let src,name,rot=0,fx=1,fy=1;const cv=()=>$('#cv');
+  const render=(out)=>{const sw=rot%2?src.naturalHeight:src.naturalWidth,sh=rot%2?src.naturalWidth:src.naturalHeight,tw=out&&+$('#rw').value||sw,k=tw/sw,c=out?document.createElement('canvas'):cv();c.width=Math.round(sw*k);c.height=Math.round(sh*k);const x=c.getContext('2d');
+    if(out&&$('#fmt').value==='image/jpeg'){x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height)}
+    x.filter=`brightness(${$('#br').value}%) contrast(${$('#ct').value}%) saturate(${$('#sa').value}%) blur(${$('#bl').value*k}px) grayscale(${$('#gs').value}%)`;
+    x.translate(c.width/2,c.height/2);x.rotate(rot*Math.PI/2);x.scale(fx,fy);const w=src.naturalWidth*k,h=src.naturalHeight*k;x.drawImage(src,-w/2,-h/2,w,h);return c};
+  $('#pk').append(bind('image/*',false,async([f])=>{src=await loadImg(f);name=base(f.name);rot=0;fx=fy=1;$('#ed').hidden=false;$('#rw').value=src.naturalWidth;render()}));
+  P.addEventListener('input',e=>{if(src&&e.target.type==='range')render()});
+  P.onclick=e=>{const a=e.target.dataset&&e.target.dataset.a;if(!a||!src)return;if(a==='rot')rot=(rot+1)%4;if(a==='fx')fx*=-1;if(a==='fy')fy*=-1;
+    if(a==='reset'){rot=0;fx=fy=1;['br','ct','sa'].forEach(i=>$('#'+i).value=100);['bl','gs'].forEach(i=>$('#'+i).value=0)}$('#rw').value=rot%2?src.naturalHeight:src.naturalWidth;render()};
+  $('#sv').onclick=async()=>{if(!src)return;const t=$('#fmt').value;save(name+'-edited.'+EXT[t],await toBlob(render(true),t,.92))}}},
+
+{id:'i2p',i:'📄',n:'Images → PDF',s:'Combine into one PDF',run(){
+  html(head('Images to PDF','Turn JPG, PNG or WebP images into a single PDF, in the order you choose.')+'<div id="pk"></div><div class="list" id="ls"></div>'+row('<label>Page size<select id="ps"><option value="fit">Fit to image</option><option value="a4">A4</option></select></label>','<button class="b" id="go">Create PDF</button>','<button class="g" id="cl">Clear</button>')+msg);
+  let files=[];const show=()=>{$('#ls').innerHTML=files.map((f,i)=>`<div class="item"><span>${i+1}. ${f.name}</span><small>${kb(f.size)}</small></div>`).join('')};
+  $('#pk').append(bind('image/*',true,fs=>{files.push(...fs);show()}));$('#cl').onclick=()=>{files=[];show()};
+  $('#go').onclick=async()=>{if(!files.length)return;$('#msg').textContent='Working…';try{const pd=await PDFLib.PDFDocument.create();
+    for(const f of files){const im=await loadImg(f),c=draw(im,im.naturalWidth,im.naturalHeight,'image/jpeg'),jb=await toBlob(c,'image/jpeg',.92),e=await pd.embedJpg(await jb.arrayBuffer());
+     let W=e.width,H=e.height;if($('#ps').value==='a4'){const s=Math.min(595/W,842/H,1);const pg=pd.addPage([595,842]);pg.drawImage(e,{x:(595-W*s)/2,y:(842-H*s)/2,width:W*s,height:H*s})}else pd.addPage([W,H]).drawImage(e,{x:0,y:0,width:W,height:H})}
+    save('images.pdf',new Blob([await pd.save()],{type:'application/pdf'}))}catch(e){$('#msg').textContent='Failed: '+e.message}}}},
+
+{id:'pm',i:'🧩',n:'PDF Merge',s:'Join PDFs',run(){
+  html(head('PDF Merge','Combine several PDF files into one.')+'<div id="pk"></div><div class="list" id="ls"></div>'+row('<button class="b" id="go">Merge PDFs</button>','<button class="g" id="cl">Clear</button>')+msg);
+  let files=[];const show=()=>{$('#ls').innerHTML=files.map((f,i)=>`<div class="item"><span>${i+1}. ${f.name}</span><small>${kb(f.size)}</small></div>`).join('')};
+  $('#pk').append(bind('application/pdf',true,fs=>{files.push(...fs);show()}));$('#cl').onclick=()=>{files=[];show()};
+  $('#go').onclick=async()=>{if(files.length<2){$('#msg').textContent='Add at least two PDFs.';return}try{const out=await PDFLib.PDFDocument.create();
+    for(const f of files){const d=await PDFLib.PDFDocument.load(await f.arrayBuffer());(await out.copyPages(d,d.getPageIndices())).forEach(p=>out.addPage(p))}
+    save('merged.pdf',new Blob([await out.save()],{type:'application/pdf'}))}catch(e){$('#msg').textContent='Failed: '+e.message}}}},
+
+{id:'ps',i:'✂️',n:'PDF Split',s:'Extract / delete pages',run(){
+  html(head('PDF Split &amp; Extract','Pull out specific pages, e.g. 1-3, 5, 8-10.')+'<div id="pk"></div><div id="info" class="msg"></div>'+row('<label>Pages<input id="rg" type="text" placeholder="1-3, 5"></label>','<label>Mode<select id="md"><option value="keep">Keep these pages</option><option value="del">Delete these pages</option></select></label>','<button class="b" id="go">Create PDF</button>')+msg);
+  let f,n=0;$('#pk').append(bind('application/pdf',false,async([x])=>{f=x;try{n=(await PDFLib.PDFDocument.load(await x.arrayBuffer())).getPageCount();$('#info').textContent=x.name+' — '+n+' pages'}catch(e){$('#info').textContent='Could not read PDF'}}));
+  $('#go').onclick=async()=>{if(!f)return;const set=new Set();$('#rg').value.split(',').forEach(s=>{const m=s.trim().match(/^(\d+)(?:\s*-\s*(\d+))?$/);if(m){const a=+m[1],b=+(m[2]||m[1]);for(let i=a;i<=b;i++)if(i>=1&&i<=n)set.add(i-1)}});
+   let idx=[...set].sort((a,b)=>a-b);if($('#md').value==='del')idx=[...Array(n).keys()].filter(i=>!set.has(i));if(!idx.length){$('#msg').textContent='No valid pages selected.';return}
+   try{const d=await PDFLib.PDFDocument.load(await f.arrayBuffer()),o=await PDFLib.PDFDocument.create();(await o.copyPages(d,idx)).forEach(p=>o.addPage(p));save(base(f.name)+'-edited.pdf',new Blob([await o.save()],{type:'application/pdf'}))}catch(e){$('#msg').textContent='Failed: '+e.message}}}},
+
+{id:'txt',i:'📝',n:'Text & Code Editor',s:'Edit, format, save as…',run(){
+  html(head('Text &amp; Code Editor','Open or paste any text-based file (TXT, JSON, CSV, MD, HTML, SVG…), edit, format and save in any extension.')+'<div id="pk"></div>'+row(
+   '<button class="g" data-a="pretty">JSON prettify</button>','<button class="g" data-a="min">JSON minify</button>','<button class="g" data-a="up">UPPER</button>','<button class="g" data-a="low">lower</button>','<button class="g" data-a="trim">Trim lines</button>','<button class="g" data-a="sort">Sort lines</button>','<button class="g" data-a="dedupe">Remove dupes</button>')+
+   '<textarea id="ta" spellcheck="false" placeholder="Paste or type here…"></textarea>'+row('<label>Find<input id="fi" type="text"></label>','<label>Replace<input id="re" type="text"></label>','<button class="g" data-a="rep">Replace all</button>','<span class="msg" id="st"></span>')+
+   row('<label>File name<input id="fn" type="text" value="untitled"></label>','<label>Extension<select id="ex"><option>txt</option><option>json</option><option>md</option><option>csv</option><option>html</option><option>svg</option></select></label>','<button class="b" id="sv">Save file</button>')+msg);
+  const ta=$('#ta'),st=()=>{const v=ta.value;$('#st').textContent=(v.trim()?v.trim().split(/\s+/).length:0)+' words · '+v.length+' chars · '+(v?v.split('\n').length:0)+' lines'};
+  $('#pk').append(bind('.txt,.json,.csv,.md,.html,.htm,.svg,.xml,.js,.css,.log,.yml,.yaml,text/*',false,async([f])=>{ta.value=await f.text();$('#fn').value=base(f.name);const e=f.name.split('.').pop().toLowerCase();if([...$('#ex').options].some(o=>o.value===e))$('#ex').value=e;st()},'Tap to open a text file (or just type below)'));
+  ta.oninput=st;st();
+  P.onclick=e=>{const a=e.target.dataset&&e.target.dataset.a;if(!a)return;const v=ta.value;try{
+   if(a==='pretty')ta.value=JSON.stringify(JSON.parse(v),null,2);if(a==='min')ta.value=JSON.stringify(JSON.parse(v));
+   if(a==='up')ta.value=v.toUpperCase();if(a==='low')ta.value=v.toLowerCase();if(a==='trim')ta.value=v.split('\n').map(s=>s.trim()).join('\n');
+   if(a==='sort')ta.value=v.split('\n').sort((x,y)=>x.localeCompare(y)).join('\n');if(a==='dedupe')ta.value=[...new Set(v.split('\n'))].join('\n');
+   if(a==='rep'&&$('#fi').value)ta.value=v.split($('#fi').value).join($('#re').value);$('#msg').textContent='';st()}catch(err){$('#msg').textContent='Error: '+err.message}};
+  $('#sv').onclick=()=>{const x=$('#ex').value,t={json:'application/json',html:'text/html',svg:'image/svg+xml',csv:'text/csv'}[x]||'text/plain';save(($('#fn').value||'untitled')+'.'+x,new Blob([ta.value],{type:t}))}}},
+
+{id:'csv',i:'🔁',n:'CSV ⇄ JSON',s:'Data converter',run(){
+  html(head('CSV ⇄ JSON','Convert tabular data between CSV and JSON.')+'<textarea id="ta" placeholder="Paste CSV or JSON here…"></textarea>'+row('<button class="b" data-a="c2j">CSV → JSON</button>','<button class="b" data-a="j2c">JSON → CSV</button>','<button class="g" id="sv">Save result</button>')+msg);
+  const parse=t=>{const r=[];let row=[],c='',q=false;for(let i=0;i<t.length;i++){const ch=t[i];if(q){if(ch=='"'){if(t[i+1]=='"'){c+='"';i++}else q=false}else c+=ch}else if(ch=='"')q=true;else if(ch==','){row.push(c);c=''}else if(ch=='\n'||ch=='\r'){if(ch=='\r'&&t[i+1]=='\n')i++;row.push(c);r.push(row);row=[];c=''}else c+=ch}if(c||row.length){row.push(c);r.push(row)}return r.filter(x=>x.length>1||x[0])};
+  const esc=v=>{v=v==null?'':typeof v=='object'?JSON.stringify(v):String(v);return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v};
+  P.onclick=e=>{const a=e.target.dataset&&e.target.dataset.a;if(!a)return;const ta=$('#ta');try{
+   if(a==='c2j'){const r=parse(ta.value),h=r.shift();ta.value=JSON.stringify(r.map(x=>Object.fromEntries(h.map((k,i)=>[k,x[i]??'']))),null,2)}
+   else{const d=JSON.parse(ta.value),arr=Array.isArray(d)?d:[d],h=[...new Set(arr.flatMap(o=>Object.keys(o)))];ta.value=[h.map(esc).join(','),...arr.map(o=>h.map(k=>esc(o[k])).join(','))].join('\n')}$('#msg').textContent='Converted.'}catch(err){$('#msg').textContent='Error: '+err.message}};
+  $('#sv').onclick=()=>{const v=$('#ta').value.trim(),j=v.startsWith('[')||v.startsWith('{');save('result.'+(j?'json':'csv'),new Blob([v],{type:'text/plain'}))}}},
+
+{id:'b64',i:'🔐',n:'Base64',s:'Text & file encoder',run(){
+  html(head('Base64 Encoder / Decoder','Encode text or any file to Base64, or decode back.')+'<div id="pk"></div><textarea id="ta" placeholder="Text or Base64…"></textarea>'+row('<button class="b" data-a="enc">Encode</button>','<button class="b" data-a="dec">Decode</button>','<button class="g" id="cp">Copy</button>')+msg);
+  $('#pk').append(bind('*/*',false,([f])=>{const r=new FileReader();r.onload=()=>{$('#ta').value=r.result;$('#msg').textContent=f.name+' encoded as data URL.'};r.readAsDataURL(f)},'Tap to encode a file as Base64'));
+  P.onclick=e=>{const a=e.target.dataset&&e.target.dataset.a;if(!a)return;const t=$('#ta');try{
+   if(a==='enc')t.value=btoa(String.fromCharCode(...new TextEncoder().encode(t.value)));
+   else{let v=t.value.trim().replace(/^data:[^,]*,/,'');t.value=new TextDecoder().decode(Uint8Array.from(atob(v),c=>c.charCodeAt(0)))}$('#msg').textContent=''}catch(err){$('#msg').textContent='Error: '+err.message}};
+  $('#cp').onclick=async()=>{try{await navigator.clipboard.writeText($('#ta').value);$('#msg').textContent='Copied.'}catch(e){$('#ta').select();$('#msg').textContent='Press copy on the selected text.'}}}}
+];
+const IC={conv:'<path d="M4 8h14M14 4l4 4-4 4M20 16H6M10 12l-4 4 4 4"/>',comp:'<path d="M4 4l6 6M10 5v5H5M20 4l-6 6M14 5v5h5M4 20l6-6M10 19v-5H5M20 20l-6-6M14 19v-5h5"/>',ied:'<path d="M3 6h11M18 6h3M3 12h5M12 12h9M3 18h13M20 18h1"/><rect x="14" y="4" width="4" height="4"/><rect x="8" y="10" width="4" height="4"/><rect x="16" y="16" width="4" height="4"/>',i2p:'<rect x="3" y="3" width="18" height="18"/><path d="M3 16l5-5 4 4 3-3 6 6"/><rect x="7" y="6" width="3" height="3"/>',pm:'<rect x="3" y="3" width="12" height="14"/><rect x="9" y="7" width="12" height="14"/>',ps:'<path d="M12 3v18M3 7h6M3 12h6M3 17h6M15 7h6M15 12h6M15 17h6"/>',txt:'<path d="M5 3h14v18H5zM8 8h8M8 12h8M8 16h5"/>',csv:'<rect x="3" y="4" width="18" height="16"/><path d="M3 10h18M3 15h18M9 4v16"/>',b64:'<path d="M8 6l-6 6 6 6M16 6l6 6-6 6M14 4l-4 16"/>'};
+const g=$('#grid');
+tools.forEach((t,ix)=>{const b=document.createElement('button');b.className='t';b.dataset.id=t.id;b.innerHTML=`<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square">${IC[t.id]}</svg><strong>${t.n}</strong><span>${t.s}</span>`;
+  b.onclick=()=>{location.hash=t.id;route()};g.append(b)});
+let cur=null;
+function route(){const id=location.hash.slice(1),t=tools.find(x=>x.id===id),k=t?id:'';if(k===cur)return;cur=k;
+  g.hidden=!!t;$('#hero').hidden=!!t;$('#bk').hidden=!t;P.hidden=!t;P.onclick=null;P.innerHTML='';
+  if(t){t.run();P.insertAdjacentHTML('afterbegin',`<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square">${IC[id]}</svg>`)}scrollTo(0,0)}
+$('#bkb').onclick=$('#lg').onclick=()=>{location.hash='';route()};
+addEventListener('hashchange',route);route();
+</script></body></html>
